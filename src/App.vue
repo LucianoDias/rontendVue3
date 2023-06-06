@@ -1,26 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container-fluid ">
+    <div class="card pt-4 pb-2" v-for="user in users" :key="user.id">
+      <div class="card-body" >
+        {{ user.name }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
+  data() {
+    return {
+      users: []
+    }
+  },
+  mounted() {
+    fetch("http://127.0.0.1:8000/api/users/")
+         .then(response => response.json())
+         .then((res) => {
+            this.users = res.data;
+         })
+  },
   components: {
-    HelloWorld
+   
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
